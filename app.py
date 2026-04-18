@@ -45,7 +45,8 @@ with st.expander("Write a Review"):
         st.rerun()
 
 # 4. Display
-for r in data["trails"][tn]:
+if tn and tn in data["trails"]:
+    for r in data["trails"][tn]:
     is_f = r["u"] in data["friends"]
     if show_friends and not is_f: continue
     st.write(f"User: {r['u']} | Score: {r['s']}")
