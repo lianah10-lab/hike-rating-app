@@ -120,14 +120,12 @@ if tn and tn in data["trails"]:
                     font-size: 60px;
                     margin-top: -20px;
                 ">
-                    ⭐ {avg_score:.1f} <span style="font-size: 25px; color: gray;">/ 5.0</span>
+                    ⭐ {avg_score:.1f} <span style="font-size: 20px; color: gray;">/ 5.0</span>
                 </h1>
             </div>
         """, unsafe_allow_html=True)
-        
         st.divider()
 
-        # --- THIS IS THE MISSING PART: HISTORY REVIEWS ---
         st.subheader("Community Reviews")
         for r in reviews:
             # Layout for each review
