@@ -16,7 +16,7 @@ with open(DB, "r") as f:
     data = json.load(f)
 
 # 2. Main UI
-st.title("HikeRate App")
+st.title("Antsy RateMyTrails")
 show_friends = st.checkbox("Only Show Friends")
 # Helper for searching
 def search_trails(searchterm: str):
