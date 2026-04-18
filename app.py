@@ -20,7 +20,8 @@ tn = st.selectbox("Select Trail", list(data["trails"].keys()))
 with st.expander("Write a Review"):
     name = st.text_input("Name", "User1")
     score = st.slider("Rating", 1.0, 5.0, 4.0, 0.1)
-    diff = st.select_slider("Level", ["Easy", "Hard"])
+    lvls = ["Beginner", "Easy", "Medium", "Hard", "Expert"]
+    diff = st.select_slider("Difficulty Level", options=lvls)
     tags = st.multiselect("Tags", ["Flowers", "Views", "Wildlife"])
     note = st.text_input("Comment")
     
