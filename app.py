@@ -54,12 +54,27 @@ with st.expander("Write a Review"):
 
 # 4. Display
 if tn and tn in data["trails"]:
-    for r in data["trails"][tn]:
+    reviews = data["trails"][tn]
+    
+    # Calculate Overall Rating
+    if reviews:
+        # Sum all scores and divide by the number of reviews
+        avg_score = sum(r["s"] for r in reviews) / len(reviews)
+        
+        # Display the average in a big metric box
+        st.metric(label=f"Overall Rating for {tn}", value=f"{avg_score:.1f} / 5.0")
+        st.divider()
+    else:
+        st.info("No ratings yet for this trail. Be the first to rate it!")
+
+    # Individual Comments
+    for r in reviews:
         is_f = r["u"] in data["friends"]
         if show_friends and not is_f: 
             continue
-        st.write(f"User: {r['u']} | Score: {r['s']}")
-        st.caption(f"Level: {r['d']} | Tags: {r['h']}")
+        
+        st.write(f"**{r['u']}** | ⭐ {r['s']}")
+        st.caption(f"Level: {r['d']} | Tags: {', '.join(r['h'])}")
         if r['c']: 
-            st.text(r['c'])
+            st.info(r['c'])
         st.divider()
