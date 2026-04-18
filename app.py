@@ -77,7 +77,11 @@ if tn and tn in data["trails"]:
         # This searches Unsplash for a photo matching the trail's name
         # Updated to use a more reliable Unsplash URL format
         search_query = tn.split(',')[0].replace(" ", "+")
-        image_url = f"https://images.unsplash.com/photo-1551632432-c735e7a03271?auto=format&fit=crop&w=800&q=80"
+        # A simple, high-quality hiking photo that will load every time
+        image_url = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800"
+        
+        # Displaying the image
+        st.image(image_url, caption="Beautiful Trail View", use_container_width=True)
         
         # We use a beautiful default hiking photo if a specific one isn't found
         st.image(image_url, caption=f"Trail View: {tn}", use_container_width=True)
