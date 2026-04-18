@@ -1,3 +1,5 @@
+from streamlit_searchbox import st_searchbox
+from geopy.geocoders import Nominatim
 import streamlit as st
 import json, os
 
@@ -14,7 +16,18 @@ with open(DB, "r") as f:
 # 2. Main UI
 st.title("HikeRate App")
 show_friends = st.checkbox("Only Show Friends")
-tn = st.selectbox("Select Trail", list(data["trails"].keys()))
+# Helper for searching
+def search_trails(searchterm: str):
+    if not searchterm or len(searchterm) < 3: return []
+    geolocator = Nominatim(user_agent="hike_app")
+    results = geolocator.geocode(searchterm, exactly_one=False, limit=5)
+    return [(r.address, r.address) for r in results] if results else []
+
+# The new search bar
+tn = st_searchbox(search_trails, placeholder="Search for any hiking trail...")
+
+if tn and tn not in data["trails"]:
+    data["trails"][tn] = []
 
 # 3. Form
 with st.expander("Write a Review"):
