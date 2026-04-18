@@ -41,13 +41,21 @@ if tn and tn not in data["trails"]:
 with st.expander("Write a Review"):
     name = st.text_input("Name", "User1")
     score = st.slider("Rating", 1.0, 5.0, 4.0, 0.1)
-    lvls = ["Beginner", "Easy", "Medium", "Hard", "Expert"]
-    diff = st.select_slider("Difficulty Level", options=lvls)
+    diff = st.select_slider("Difficulty Level", options=["Beginner", "Easy", "Medium", "Hard", "Expert"])
     tags = st.multiselect("Tags", ["Flowers", "Views", "Wildlife"])
     note = st.text_input("Comment")
     
+    # This adds the file picker to your form
+    uploaded_file = st.file_uploader("Share a photo of the trail", type=["jpg", "png", "jpeg"])
+    
     if st.button("Submit"):
-        new = {"u": name, "s": score, "d": diff, "h": tags, "c": note}
+        import base64
+        img_str = ""
+        # Convert the uploaded image into a string to save in your JSON
+        if uploaded_file is not None:
+            img_str = base64.b64encode(uploaded_file.read()).decode()
+            
+        new = {"u": name, "s": score, "d": diff, "h": tags, "c": note, "img": img_str}
         data["trails"][tn].append(new)
         with open(DB, "w") as f: json.dump(data, f)
         st.rerun()
@@ -73,18 +81,19 @@ if tn and tn in data["trails"]:
             
     with col2:
         st.write("📷 **Trail View**")
-        # For a real photo, we use a search-based image URL
-        # This searches Unsplash for a photo matching the trail's name
-        # Updated to use a more reliable Unsplash URL format
-        search_query = tn.split(',')[0].replace(" ", "+")
-        # A simple, high-quality hiking photo that will load every time
-        image_url = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800"
         
-        # Displaying the image
-        st.image(image_url, caption="Beautiful Trail View", use_container_width=True)
+        # Find all reviews for this trail that have an image
+        photos = [r["img"] for r in reviews if r.get("img")]
         
-        # We use a beautiful default hiking photo if a specific one isn't found
-        st.image(image_url, caption=f"Trail View: {tn}", use_container_width=True)
+        if photos:
+            # Show the most recent photo
+            import base64
+            st.image(base64.b64decode(photos[-1]), caption=f"Shared by the community", use_container_width=True)
+            if len(photos) > 1:
+                st.caption(f"Plus {len(photos)-1} more photos in the reviews below!")
+        else:
+            # The placeholder sentence you requested
+            st.info("Ooops, no photos yet. Be the first to share this trail!")
     
     st.divider()
 
