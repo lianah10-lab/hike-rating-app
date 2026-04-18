@@ -120,7 +120,7 @@ if tn and tn in data["trails"]:
                     font-size: 40px;
                     margin-top: -10px;
                 ">
-                    ⭐ {avg_score:.1f} <span style="font-size: 20px; color: gray;">/ 5.0</span>
+                    {avg_score:.1f} <span style="font-size: 20px; color: gray;">/ 5.0</span>
                 </h1>
             </div>
         """, unsafe_allow_html=True)
