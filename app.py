@@ -18,9 +18,17 @@ st.title("HikeRate App")
 show_friends = st.checkbox("Only Show Friends")
 # Helper for searching
 def search_trails(searchterm: str):
-    if not searchterm or len(searchterm) < 3: return []
+    if not searchterm or len(searchterm) < 3: 
+        return []
+    
     geolocator = Nominatim(user_agent="hike_app")
-    results = geolocator.geocode(searchterm, exactly_one=False, limit=5)
+    
+    # We add "trail" to the search to filter for hiking spots only
+    filtered_query = f"{searchterm} trail"
+    
+    results = geolocator.geocode(filtered_query, exactly_one=False, limit=5)
+    
+    # This returns only the names of the trails found
     return [(r.address, r.address) for r in results] if results else []
 
 # The new search bar
