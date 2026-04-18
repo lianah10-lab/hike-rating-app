@@ -56,25 +56,39 @@ with st.expander("Write a Review"):
 if tn and tn in data["trails"]:
     reviews = data["trails"][tn]
     
-    # Calculate Overall Rating
+    # --- NEW: TRAIL VIEW SECTION ---
+    st.subheader(f"Explore {tn}")
+    
+    # Creating a side-by-side layout: Map on left, Placeholder Photo on right
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.write("📍 **Trail Location**")
+        # We can use a simple map to show exactly where the trail is
+        # (This uses the coordinates from your search box logic)
+        geolocator = Nominatim(user_agent="hike_app")
+        loc = geolocator.geocode(tn)
+        if loc:
+            st.map({"lat": [loc.latitude], "lon": [loc.longitude]})
+            
+    with col2:
+        st.write("📷 **Trail View**")
+        # For a real photo, we use a search-based image URL
+        # This searches Unsplash for a photo matching the trail's name
+        image_url = f"https://source.unsplash.com/featured/?hiking,trail,{tn.split(',')[0]}"
+        st.image(image_url, caption=f"Current view near {tn}", use_column_width=True)
+    
+    st.divider()
+
+    # --- RATING METRIC ---
     if reviews:
-        # Sum all scores and divide by the number of reviews
         avg_score = sum(r["s"] for r in reviews) / len(reviews)
-        
-        # Display the average in a big metric box
-        st.metric(label=f"Overall Rating for {tn}", value=f"{avg_score:.1f} / 5.0")
-        st.divider()
+        st.metric(label="Overall Community Rating", value=f"{avg_score:.1f} / 5.0")
     else:
         st.info("No ratings yet for this trail. Be the first to rate it!")
 
-    # Individual Comments
+    # --- INDIVIDUAL COMMENTS ---
     for r in reviews:
-        is_f = r["u"] in data["friends"]
-        if show_friends and not is_f: 
-            continue
-        
+        # (Keep your existing review display logic here)
         st.write(f"**{r['u']}** | ⭐ {r['s']}")
-        st.caption(f"Level: {r['d']} | Tags: {', '.join(r['h'])}")
-        if r['c']: 
-            st.info(r['c'])
         st.divider()
