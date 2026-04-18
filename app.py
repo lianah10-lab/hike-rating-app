@@ -91,18 +91,30 @@ if tn and tn in data["trails"]:
                 st.rerun()
 
     st.divider()
-
+    
     # Calculate Overall Rating
     if reviews:
         avg_score = sum(r["s"] for r in reviews) / len(reviews)
-        st.metric(label="Overall Rating", value=f"{avg_score:.1f} / 5.0")
         
-        for r in reviews:
-            st.write(f"**{r['u']}** | ⭐ {r['s']}")
-            # Show the photo if it exists for this comment
-            if r.get('img'):
-                import base64
-                st.image(base64.b64decode(r['img']), width=200)
-            st.caption(f"Level: {r['d']} | Tags: {', '.join(r['h'])}")
-            if r['c']: st.text(r['c'])
-            st.divider()
+        # Fancy Font + Orange Ink Style
+        st.markdown(f"""
+            <div style="margin-bottom: -15px;">
+                <p style="
+                    font-family: 'Brush Script MT', cursive; 
+                    color: #FF8C00; 
+                    font-size: 38px; 
+                    font-weight: bold;
+                    margin-bottom: 0px;
+                ">
+                    Overall Rating
+                </p>
+                <h1 style="
+                    color: #FFA500; 
+                    font-family: 'Georgia', serif;
+                    margin-top: -10px;
+                ">
+                    ⭐ {avg_score:.1f} <span style="font-size: 20px; color: gray;">/ 5.0</span>
+                </h1>
+            </div>
+        """, unsafe_allow_html=True)
+        st.divider()
