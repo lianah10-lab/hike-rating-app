@@ -92,17 +92,23 @@ if tn and tn in data["trails"]:
 
     st.divider()
     
-    # Calculate Overall Rating
+ # --- 5. OVERALL RATING & INDIVIDUAL COMMENTS ---
     if reviews:
         avg_score = sum(r["s"] for r in reviews) / len(reviews)
         
-        # Fancy Font + Orange Ink Style
+        # Import Amatic SC from Google Fonts and Apply Orange Style
+        st.markdown("""
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap');
+            </style>
+        """, unsafe_allow_html=True)
+
         st.markdown(f"""
-            <div style="margin-bottom: -15px;">
+            <div style="margin-bottom: 10px;">
                 <p style="
-                    font-family: 'Brush Script MT', cursive; 
+                    font-family: 'Amatic SC', cursive; 
                     color: #FF8C00; 
-                    font-size: 38px; 
+                    font-size: 50px; 
                     font-weight: bold;
                     margin-bottom: 0px;
                 ">
@@ -110,11 +116,30 @@ if tn and tn in data["trails"]:
                 </p>
                 <h1 style="
                     color: #FFA500; 
-                    font-family: 'Georgia', serif;
-                    margin-top: -10px;
+                    font-family: 'Amatic SC', cursive;
+                    font-size: 60px;
+                    margin-top: -20px;
                 ">
-                    ⭐ {avg_score:.1f} <span style="font-size: 20px; color: gray;">/ 5.0</span>
+                    ⭐ {avg_score:.1f} <span style="font-size: 25px; color: gray;">/ 5.0</span>
                 </h1>
             </div>
         """, unsafe_allow_html=True)
+        
         st.divider()
+
+        # --- THIS IS THE MISSING PART: HISTORY REVIEWS ---
+        st.subheader("Community Reviews")
+        for r in reviews:
+            # Layout for each review
+            st.write(f"**{r['u']}** | ⭐ {r['s']}")
+            
+            # Show the photo if this specific review has one
+            if r.get('img'):
+                import base64
+                st.image(base64.b64decode(r['img']), width=250)
+            
+            # Show details
+            st.caption(f"Difficulty: {r['d']} | Tags: {', '.join(r['h'])}")
+            if r['c']: 
+                st.info(r['c'])
+            st.divider()
