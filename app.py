@@ -117,10 +117,10 @@ if tn and tn in data["trails"]:
                 <h1 style="
                     color: #FFA500; 
                     font-family: 'Amatic SC', cursive;
-                    font-size: 40px;
+                    font-size: 40px; 
                     margin-top: -10px;
                 ">
-                    🤍 {avg_score:.1f} <span style="font-size: 20px; color: gray;">/ 5.0</span>
+                    <span style="font-size: 20px;">🤍</span> {avg_score:.1f} <span style="font-size: 16px; color: gray;">/ 5.0</span>
                 </h1>
             </div>
         """, unsafe_allow_html=True)
