@@ -104,11 +104,11 @@ if tn and tn in data["trails"]:
         """, unsafe_allow_html=True)
 
         st.markdown(f"""
-            <div style="margin-bottom: 10px;">
+            <div style="margin-bottom: 5px;">
                 <p style="
                     font-family: 'Amatic SC', cursive; 
                     color: #FF8C00; 
-                    font-size: 50px; 
+                    font-size: 30px; 
                     font-weight: bold;
                     margin-bottom: 0px;
                 ">
@@ -117,8 +117,8 @@ if tn and tn in data["trails"]:
                 <h1 style="
                     color: #FFA500; 
                     font-family: 'Amatic SC', cursive;
-                    font-size: 60px;
-                    margin-top: -20px;
+                    font-size: 40px;
+                    margin-top: -10px;
                 ">
                     ⭐ {avg_score:.1f} <span style="font-size: 20px; color: gray;">/ 5.0</span>
                 </h1>
