@@ -47,9 +47,11 @@ with st.expander("Write a Review"):
 # 4. Display
 if tn and tn in data["trails"]:
     for r in data["trails"][tn]:
-    is_f = r["u"] in data["friends"]
-    if show_friends and not is_f: continue
-    st.write(f"User: {r['u']} | Score: {r['s']}")
-    st.caption(f"Level: {r['d']} | Tags: {r['h']}")
-    if r['c']: st.text(r['c'])
-    st.divider()
+        is_f = r["u"] in data["friends"]
+        if show_friends and not is_f: 
+            continue
+        st.write(f"User: {r['u']} | Score: {r['s']}")
+        st.caption(f"Level: {r['d']} | Tags: {r['h']}")
+        if r['c']: 
+            st.text(r['c'])
+        st.divider()
