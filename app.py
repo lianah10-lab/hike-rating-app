@@ -126,7 +126,7 @@ if tn and tn in data["trails"]:
         """, unsafe_allow_html=True)
         st.divider()
 
-        st.subheader("Community Reviews")
+        st.subheader("Reviews")
         for r in reviews:
             # Layout for each review
             st.write(f"**{r['u']}** | ⭐ {r['s']}")
